@@ -1,0 +1,21 @@
+apiVersion : v1
+kind : Pod 
+metadata :
+  name : mysecretpod
+  labels : 
+    name : mysecretpod
+
+spec :
+  containers :
+    - image : redis
+      name : mysecretpod
+      volumeMounts :
+        - name : foo
+          mountPath : /oracle/secrets
+          readOnly : true
+
+
+  volumes :
+    - name : foo
+      secret :
+        secretName : mysecret

@@ -1,0 +1,20 @@
+apiVersion : batch/v1
+kind : Job 
+metadata :
+  name : counterdemo-parallel
+spec :
+  completions : 3
+  parallelism : 2
+  template :
+    metadata :
+      name : counterdemo-parallel
+    spec :
+      containers :
+        - name : counter 
+          image : centos:7
+          command : 
+            - "bin/bash"
+            - "-c"
+            - "for i in 9 8 7 6 5 4 3 2 1 0; do echo $i; done"
+      restartPolicy : Never
+

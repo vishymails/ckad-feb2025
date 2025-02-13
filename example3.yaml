@@ -1,0 +1,28 @@
+apiVersion : apps/v1
+kind : ReplicaSet 
+metadata :
+  name : tomcat-rs
+
+spec :
+  replicas : 5 
+  selector : 
+    matchLabels :
+      app : tomcat-app
+    matchExpressions :
+      - {key : tier, operator : In, values : [frontend, backend]}
+
+  template :
+    metadata :
+      name : tomcat-pod
+      labels :
+        app : tomcat-app
+        tier : frontend
+
+    spec :
+      containers :
+        - name : tomcat-container 
+          image : vishymails/tomcatimage:1.0
+          ports : 
+            - containerPort : 8080
+
+            

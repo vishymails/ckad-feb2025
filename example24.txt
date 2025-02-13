@@ -1,0 +1,12 @@
+ echo -n 'admin' | base64 > username.txt
+   11  echo -n 'password123' | base64 > password.txt
+   12  cat username.txt
+   13  cat password.txt 
+   14  kubectl get secrtes 
+   15  kubectl get secrets 
+   16  kubectl create secret generic db-user-pass --from-file=./username.txt --from-file=./password.txt
+   17  kubectl get secrets 
+   18  kubectl describe secrets db-user-pass
+
+
+   
