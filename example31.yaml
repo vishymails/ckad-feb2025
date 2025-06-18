@@ -1,23 +1,37 @@
-apiVersion: batch/v1
-kind: CronJob
+apiVersion : v1
+kind: ConfigMap
 metadata:
-  name: cron-demo
-spec:
-  schedule: "*/1 * * * *"
-  jobTemplate:
-    spec:
-      template:
-        metadata :
-          labels :
-            name : cron-demo
+  name: myconfig
+data:
+  db_url : "mysql://user:password@localhost:3306/mydb"
+  db_host : "localhost"
+  db_port : "3306"
+  db_user : "user"
+  db_password : "password"
 
-        spec:
-          containers:
-          - name: cron-demo
-            image: centos:7
-            command:
-            - python
-            - -c
-            - from datetime import datetime; print('[{}] cron demo for ckad batch students Oracle...'.format(datetime.now()))
-          restartPolicy: Never
-          
+  service-details : |
+    service_name: myservice
+    service_version: v1.0
+    service_description: "This is a sample service configuration"
+
+  css-properties : |
+    body {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    h1 {
+      font-size: 2em;
+      color: #007bff;
+    }
+    p {
+      font-size: 1em;
+      line-height: 1.5;
+    }
+
+  json-data : |
+    {
+      "name": "example",
+      "version": "1.0",
+      "description": "This is a sample JSON data"
+    }
+    

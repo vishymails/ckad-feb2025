@@ -1,19 +1,23 @@
-apiVersion : apps/v1
-kind : DaemonSet 
+apiVersion : v1
+kind : Pod 
 metadata :
-  name : fluent-ds
+  name : demo-pv-pod
+  labels :
+    name : demo-pv-pod
 
 spec :
-  template :
-    metadata :
-      labels :
-        name : fluentd
-    spec :
-      containers :
-        - name : fluentd
-          image : gcr.io/google-containers/fluentd-elasticsearch:1.20
-  selector :
-    matchLabels :
-      name : fluentd
+  containers :
+  - name : pv-container
+    image : vishymails/tomcatimage:1.0 
+    ports :
+    - containerPort : 8080
+      protocol : TCP
+    volumeMounts :
+    - name : pv-volume
+      mountPath : /oracle-pv-volume
 
-      
+
+  volumes :
+  - name : pv-volume
+    persistentVolumeClaim:
+      claimName: demo-pvc

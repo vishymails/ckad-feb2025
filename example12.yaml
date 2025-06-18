@@ -1,18 +1,13 @@
 apiVersion : v1
-kind : Pod 
+kind : Service
 metadata :
-  name : tomcat-pod 
-
+  name : nginx
 spec :
-  containers :
-    - image : vishymails/tomcatimage:1.0
-      name : tomcat-containers
-      volumeMounts :
-        - name : test-vol
-          mountPath : /oracle-host-path-volume
+  selector :
+    version : blue
+  ports :
+    - protocol : TCP
+      port : 80
+      targetPort : 80
 
-
-  volumes :
-    - name : test-vol
-      hostPath :
-        path : /test-vol
+      

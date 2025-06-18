@@ -1,21 +1,24 @@
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
+apiVersion : batch/v1
+kind: Job
 metadata:
-  name: hpa-resource-metrics-memory
-  namepace : default
+  name: counting-job2
 spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: tomcat-deploy
-  minReplicas: 3
-  maxReplicas: 10
-  metrics:
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: AverageValue
-        averageValue: 500Mi
-
-        
+  completions : 3
+  parallelism : 2
+  template:
+    metadata:
+        name : counting-job2
+    spec:
+      containers :
+        - name: count2
+          image: centos:7
+          command: 
+            - /bin/sh
+            - -c
+            - |
+              for i in $(seq 1 10); do
+                echo "Count: $i"
+                sleep 1
+              done
+      restartPolicy: Never
+  

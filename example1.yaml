@@ -3,12 +3,10 @@ kind : Pod
 metadata :
   name : tomcat-pod 
   labels :
-    app : tomcat 
+    app : tomcat
     tier : dev
-
 spec :
   containers :
-    - name : tomcat-container
-      image : vishymails/tomcatimage:1.0
-
-      
+  - name : tomcat-container
+    image : vishymails/tomcatimage:1.0 
+    

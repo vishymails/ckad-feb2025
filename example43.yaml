@@ -1,0 +1,11 @@
+apiVersion : rbac.authorization.k8s.io/v1
+kind : Role 
+metadata:
+  name : pod-admin
+  namespace : nec
+rules:
+- apiGroups : [""] # means core API group
+  # This rule allows the role to manage pods in the nec namespace.
+  resources : ["pods"]
+  verbs : ["get", "list", "watch", "create", "update", "delete"]
+

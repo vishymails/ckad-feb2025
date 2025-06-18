@@ -1,0 +1,58 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  # Name must match the plural name of the CRD, followed by the group name.
+  name: websites.stable.example.com
+spec:
+  # Group name to use for the API.
+  group: stable.example.com
+  # List of versions supported by this CustomResourceDefinition.
+  versions:
+    - name: v1
+      # served: true means that this version is enabled for use.
+      served: true
+      # storage: true indicates that this is the primary version for storage.
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the website.
+                image:
+                  type: string
+                  description: The container image for the website.
+                replicas:
+                  type: integer
+                  minimum: 1
+                  default: 1
+                  description: The desired number of replicas for the website.
+              required:
+                - name
+                - image
+            status:
+              type: object
+              properties:
+                availableReplicas:
+                  type: integer
+                  description: The number of available website replicas.
+                state:
+                  type: string
+                  description: Current state of the website (e.g., "Running", "Deploying", "Failed").
+  # Scope indicates whether the custom resource is namespace-scoped or cluster-scoped.
+  scope: Namespaced # We want to deploy websites within specific namespaces
+  names:
+    # Plural name to be used in URLs, e.g., /apis/stable.example.com/v1/websites
+    plural: websites
+    # Singular name to be used as an alias on the CLI and for display.
+    singular: website
+    # Kind is a CamelCased name of the resource.
+    kind: Website
+    # Short names for the resource (optional).
+    shortNames:
+      - ws
+

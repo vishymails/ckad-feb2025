@@ -1,10 +1,33 @@
-apiVersion : certificates.k8s.io/v1
-kind : CertificateSigningRequest
-metadata :
-  name : nec-adm
-spec :
-  request : LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQy9qQ0NBZVlDQVFBd2dZUXhDekFKQmdOVkJBWVRBa2xPTVFzd0NRWURWUVFJREFKTFFURVNNQkFHQTFVRQpCd3dKUW1GdVoyRnNiM0psTVJBd0RnWURWUVFLREFkTGIzSmxMbUZwTVE4d0RRWURWUVFMREFaSFJVNGdRVWt4CkREQUtCZ05WQkFNTUEySjJjakVqTUNFR0NTcUdTSWIzRFFFSkFSWVVkbWx6YUhsdFlXbHNjMEJuYldGcGJDNWoKYjIwd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURYbVJZMkdpUE8rQStIYTI2NwoxcDM2dmVNNnJQZkp5MHJhSW9hZllNS3oxQURNcTcxK2pncWhTNmNOTWpndTdwaTZqMkFYaFYvd2tUMUl6NWpVCkllSkdkcURmRTFpU2hQQWVIZnY0RGhOV3AwdVR3YUdvQ1BONjViVEZERFJvUVlkS0RIQ0VZcWljWENVZnROVk0KWUlvZUpyc0ZsTHFtVlIxNU9ZWVp2dFlZaytybXZFaVBteHNiTVFPdlJSTkNnNUxSdjFmZEoxMjZxaGxYNGJvNwpZVy9hNCt3Vk1xeGcxcTB6Q01lcG1QT3lyYVJHdVlwR1F6RE5xeXBVenBuaGcvK2FEUmJGenZWUXB2OUpLTjl3CndUMk9Od3FZZ1cyU0JmYkZxaE8zR3p1YkhUc2M3bmtRSi85WFdvUWpvbnZ3cTd5TVVXd0NoK3ZPSnpZR1M3ay8KUi9oVkFnTUJBQUdnTkRBV0Jna3Foa2lHOXcwQkNRSXhDUXdIVDNKaFkyeGxJREFhQmdrcWhraUc5dzBCQ1FjeApEUXdMY0dGemMzZHZjbVF4TWpNd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFKMjNOOFBxTW9pcG41STAxRFptCjYzY1Q3Szk3bEc3cGdRK0x6SE9JQVI1ekxpY1g5YkVTMC9oamlsTEpSclpoZEZoUnJDQ25hNUg1dDQreHR0L00KdVk0QmExT3EyaHlxd0NMUHhFbWJwWEVoQVBIWjdRa2hNdUU4Wk1YbDA0eWJzVk1nUmVDV1d1bUxsM29lRTFQcAppdXhxSHNLZmV5eXJJNitmdXRUVlFNaER6QU9BMWRialVlOTNHSDZJcGhQd2RMSUVSU0wzWWh0c29mcGQwektMCnVwbml3R2drY2IvTnB4cUhBUXEwQ250Z2U0YkswUFBvN0x6dWZhZzFDOWk3VTYyRkxleHUrdkthZ3QrblR5R2kKczFuc0dNUlRwd204eTU0d3NYUE5DNmtoUW1YVC9tN1ZtL3lmb2Foa0FvSldDZlhvUU1ieUVYUmVCVmh3TEYzOApQdW89Ci0tLS0tRU5EIENFUlRJRklDQVRFIFJFUVVFU1QtLS0tLQo=
-  signerName : kubernetes.io/kube-apiserver-client
-  usages :
-    - client auth 
-    
+apiVersion : apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+spec:
+  serviceName: redis
+  replicas: 4
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:latest
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+          
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+     

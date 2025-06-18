@@ -1,21 +1,18 @@
-apiVersion : v1
-kind : Pod 
+apiVersion : apps/v1
+kind : DaemonSet
 metadata :
-  name : mysecretpod
-  labels : 
-    name : mysecretpod
-
+  name : fluent-ds
 spec :
-  containers :
-    - image : redis
-      name : mysecretpod
-      volumeMounts :
-        - name : foo
-          mountPath : /oracle/secrets
-          readOnly : true
+  template :
+    metadata :
+      labels :
+        name : fluentd
+    spec :
+      containers :
+      - name : fluentd
+        image : gcr.io/google-containers/fluentd-elasticsearch:1.20
+  selector :
+    matchLabels :
+      name : fluentd
 
-
-  volumes :
-    - name : foo
-      secret :
-        secretName : mysecret
+      

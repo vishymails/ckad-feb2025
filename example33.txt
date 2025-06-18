@@ -1,0 +1,16 @@
+ 4  cat > example1.yaml
+    5  cat > example18.yaml
+    6  kubectl create -f example1.yaml -f example18.yaml
+    7  kubectl get pods 
+    8  kubectl logs tomcat-pod 
+    9  kubectl logs multicontainer-pod -c consumer 
+   10  kubectl logs multicontainer-pod -c producer 
+   11  clear
+   12  kubectl logs --tail=6 tomcat-pod
+   13  kubectl logs tomcat-pod 
+   14  kubectl logs --tail=6 tomcat-pod
+   15  kubectl logs -f tomcat-pod 
+   16  kubectl logs multicontainer-pod -c consumer 
+   17  kubectl logs --timestamps multicontainer-pod -c consumer 
+   18  kubectl logs --limit-bytes=1000 tomcat-pod
+   19  history 

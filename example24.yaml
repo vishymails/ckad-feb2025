@@ -1,0 +1,52 @@
+apiVersion : v1
+kind : PersistentVolume
+metadata:
+  name: demo-pv1
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath : 
+    path: /mnt/datas1
+
+---
+
+apiVersion : v1
+kind : PersistentVolume
+metadata:
+  name: demo-pv2
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath : 
+    path: /mnt/datas2
+
+---
+
+apiVersion : v1
+kind : PersistentVolumeClaim
+metadata:
+  name: demo-pvc2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: manual
+  selector:
+    matchLabels:
+      type: local
+  volumeName : demo-pv2
+
+  
+

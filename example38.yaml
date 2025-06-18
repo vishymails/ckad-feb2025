@@ -1,0 +1,20 @@
+apiVersion : batch/v1
+kind: CronJob
+metadata:
+  name: counting-cronjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: counting-cronjob
+        spec:
+          containers:
+            - name: count
+              image: centos:7
+              args :
+                - python 
+                - -c
+                - from datetime import datetime; print('[{}] Cron Demo for Oracle CKAD batch....'.format(datetime.now()))
+          restartPolicy: Never
